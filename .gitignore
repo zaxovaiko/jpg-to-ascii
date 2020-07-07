@@ -1,0 +1,12 @@
+# IDEs
+.idea
+.vscode
+
+# NPM
+node_modules
+package-lock.json
+
+# Input and output file
+out.txt
+src.jpg
+temp
