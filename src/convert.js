@@ -4,33 +4,49 @@ const jpeg = require("jpeg-js");
 const map = require("./ascii_map.json");
 
 module.exports = function (file) {
-	// TODO: check extention of image
+	// Remove file to save space
+	const removeFile = filepath => {
+		try {
+			fs.unlinkSync(filepath);
+		} catch (err) {
+			return "Something went wrong.";
+		}
+	};
+
 	const filepath = path.join(
 		__dirname,
 		`../${file.destination}${file.filename}`
 	);
+
+	// Check for valid format
+	if (!file || file.mimetype !== "image/jpeg") {
+		removeFile(filepath);
+		return "Choose an image in jpg format.";
+	}
+
 	const jpegData = fs.readFileSync(filepath);
 	const rawImageData = jpeg.decode(jpegData, {
 		useTArray: true,
 		formatAsRGBA: true
 	});
 
-	try {
-		fs.unlinkSync(filepath);
-	} catch (err) {
-		return "Something went wrong.";
-	}
-
+	removeFile(filepath);
 	let data = [];
 	let width = rawImageData.width;
 
-	// Prevent error appearing
-	if (rawImageData.width * rawImageData.height >= 7_000_000) {
+	// Prevent memory load
+	if (rawImageData.width * rawImageData.height >= 1_200_000) {
 		return "Image is too big.";
 	}
 
-	for (let i = 0; i < rawImageData.data.length; i += 4) {
-		data.push(rawImageData.data.slice(i, i + 4));
+	for (let i = 0; i < rawImageData.data.length - 4; i += 4) {
+		// data.push(rawImageData.data.slice(i, i + 4));
+		data.push([
+			rawImageData.data[i],
+			rawImageData.data[i + 1],
+			rawImageData.data[i + 2],
+			rawImageData.data[i + 3]
+		]);
 	}
 
 	// Linear luminance is calculated as a weighted sum of the three linear-intensity values RGB
@@ -46,6 +62,7 @@ module.exports = function (file) {
 		return map[keys[tmp.indexOf(Math.min(...tmp))]];
 	}
 
+	// Resize image by removing each second row or column
 	function resize(times) {
 		// Remove every second column
 		function squeezeWidth(arr) {
@@ -78,21 +95,16 @@ module.exports = function (file) {
 		}
 	}
 
-	// TODO: write algorithm for best image fitting
-	resize(Math.ceil(Math.random() * 4));
+	// Find how many times we can squeeze image
+	resize(Math.ceil(Math.log2(width / 170)));
 
-	// Encode outcoming pixels to ascii symbols
-	let encodedImg = data.map(e => encode(e));
-	let out = "";
-
-	// Make output text image
-	// TODO: replace with reducer
-	for (let i = 0; i < encodedImg.length; i++) {
-		out += encodedImg[i];
-		if ((i + 1) % width === 0) {
-			out += "\n";
-		}
-	}
-
-	return out;
+	// Encode outcoming pixels to ascii symbols and then
+	// make output text image
+	return data
+		.map(e => encode(e))
+		.reduce(
+			(acc, cur, ind) =>
+				(acc += cur + ((ind + 1) % width === 0 ? "\n" : "")),
+			""
+		);
 };
