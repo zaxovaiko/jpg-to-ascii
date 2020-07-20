@@ -2,7 +2,8 @@
 
 Converts JPG picture into ASCII symbols. The project was build with JavaScript.
 
-![Screenshot](https://imgur.com/dBvZSxZ.png)
+![Screenshot](https://imgur.com/200TEnr.png)
+![Screenshot](https://imgur.com/Ua6oXLe.png)
 
 ## How to run
 
@@ -31,7 +32,5 @@ To make an image smaller I have used an algorithm that just removes every second
 To get number of squeeze times I used tricky formula `2^x = width / 170px`.
 
 ## To-do
-
- - Add squeeze level selection
  - Add option for extended ASCII map
  - Add support of other image formats
