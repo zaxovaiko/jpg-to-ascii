@@ -2,16 +2,16 @@
 
 Converts JPG picture into ASCII symbols. The project was build with JavaScript.
 
-![Screenshot](https://imgur.com/200TEnr.png)
-![Screenshot](https://imgur.com/Ua6oXLe.png)
+![Screenshot](https://imgur.com/1rKeWS4.png)
+![Screenshot](https://imgur.com/MWO7O3Q.png)
 
 ## How to run
 
 To run this project on your own machine follow these steps:
 
--   Clone this repository with `git clone https://github.com/zaxoavoki/jpg-to-ascii.git`
+- Clone this repository with `git clone https://github.com/zaxoavoki/jpg-to-ascii.git`
 - Install all dependencies with `npm install`
--   Run `npm run start`
+- Run `npm run start`
 
 or check it out [here](https://jpg-to-ascii.herokuapp.com/).
 

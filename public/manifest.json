@@ -1,0 +1,12 @@
+{
+	"name": "JPG to ASCII converter",
+	"description": "Online converter images in JPG format to ASCII table art",
+	"lang": "en",
+	"background_color": "white",
+	"icons": [
+		{
+			"src": "images/icon.svg",
+			"sizes": "256x256"
+		}
+	]
+}

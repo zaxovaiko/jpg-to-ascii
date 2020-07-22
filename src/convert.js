@@ -3,16 +3,19 @@ const path = require("path");
 const jpeg = require("jpeg-js");
 const map = require("./ascii_map.json");
 
-module.exports = function (file) {
+module.exports = function (req) {
 	// Remove file to save space
 	const removeFile = filepath => {
 		try {
 			fs.unlinkSync(filepath);
 		} catch (err) {
-			return "Something went wrong.";
+			return {
+				error: "Something went wrong."
+			};
 		}
 	};
 
+	const file = req.file;
 	const filepath = path.join(
 		__dirname,
 		`../${file.destination}${file.filename}`
@@ -21,7 +24,9 @@ module.exports = function (file) {
 	// Check for valid format
 	if (!file || file.mimetype !== "image/jpeg") {
 		removeFile(filepath);
-		return "Choose an image in jpg format.";
+		return {
+			error: "Choose an image in jpg format."
+		};
 	}
 
 	const jpegData = fs.readFileSync(filepath);
@@ -35,8 +40,10 @@ module.exports = function (file) {
 	let width = rawImageData.width;
 
 	// Prevent memory load
-	if (rawImageData.width * rawImageData.height >= 1_200_000) {
-		return "Image is too big.";
+	if (rawImageData.width * rawImageData.height >= 1200000) {
+		return {
+			error: "Image is too big."
+		};
 	}
 
 	for (let i = 0; i < rawImageData.data.length - 4; i += 4) {
@@ -95,16 +102,23 @@ module.exports = function (file) {
 		}
 	}
 
-	// Find how many times we can squeeze image
-	resize(Math.ceil(Math.log2(width / 170)));
+	// If client checked compression
+	if (req.body.rand === "true") {
+		resize(Math.ceil(Math.random() * 4));
+	} else {
+		// Find how many times we can squeeze image
+		resize(Math.ceil(Math.log2(width / 170)));
+	}
 
 	// Encode outcoming pixels to ascii symbols and then
 	// make output text image
-	return data
-		.map(e => encode(e))
-		.reduce(
-			(acc, cur, ind) =>
-				(acc += cur + ((ind + 1) % width === 0 ? "\n" : "")),
-			""
-		);
+	return {
+		data: data
+			.map(e => encode(e))
+			.reduce(
+				(acc, cur, ind) =>
+					(acc += cur + ((ind + 1) % width === 0 ? "\n" : "")),
+				""
+			)
+	};
 };
