@@ -114,10 +114,8 @@ module.exports = function (req) {
 	// make output text image
 	return {
 		data: data
-			.map(e => encode(e))
 			.reduce(
-				(acc, cur, ind) =>
-					(acc += cur + ((ind + 1) % width === 0 ? "\n" : "")),
+				(acc, cur, ind) => acc + encode(cur) + ((ind + 1) % width === 0 ? "\n" : ""),
 				""
 			)
 	};
