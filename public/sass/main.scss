@@ -78,6 +78,29 @@ label {
 	color: $secondary-text-color;
 }
 
+select {
+	display: block;
+	margin-top: 8px;
+	padding: 6px 10px;
+	border-radius: 6px;
+	border: solid 1px darken($btn-secondary-color, 20%);
+	font-family: "Quicksand", sans-serif;
+	font-size: 1rem;
+	background: #fff;
+	color: #333;
+	cursor: pointer;
+	transition: ease 0.2s;
+
+	&:focus {
+		outline: none;
+		border-color: $btn-primary-color;
+	}
+}
+
 #image {
 	display: none;
+}
+
+pre {
+	line-height: 90%;
 }

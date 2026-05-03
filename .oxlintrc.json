@@ -1,0 +1,7 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/apps/oxlint/configuration_schema.json",
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}

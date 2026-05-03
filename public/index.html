@@ -25,9 +25,15 @@
 				<span id="image-label">Choose a file...</span>
 				<input id="image" name="image" type="file" />
 			</label>
-			<label for="rand">
-				<input id="rand" name="rand" type="checkbox" />
-				<span>Random compression</span>
+			<label for="compression">
+				<span>Compression level</span>
+				<select id="compression" name="compression">
+					<option value="170">Auto (~170px wide)</option>
+					<option value="85">High (~85px wide)</option>
+					<option value="42">Very high (~42px wide)</option>
+					<option value="21">Extreme (~21px wide)</option>
+					<option value="random">Random</option>
+				</select>
 			</label>
 			<button id="submit" type="submit" class="btn btn-primary">
 				Convert

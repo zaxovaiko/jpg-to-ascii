@@ -1,40 +1,26 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-	mode: "production",
-	entry: {
-		app: "./public/js/app.js"
-	},
-	output: {
-		path: path.resolve(__dirname, "public", "dist"),
-		filename: "[name].js"
-	},
-	optimization: {
-		minimizer: [new UglifyJsPlugin()]
-	},
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: "[name].css"
-		})
-	],
-	module: {
-		rules: [
-			{
-				test: /\.m?js$/,
-				exclude: /(node_modules|bower_components)/,
-				use: {
-					loader: "babel-loader",
-					options: {
-						presets: ["@babel/preset-env"]
-					}
-				}
-			},
-			{
-				test: /\.s[ac]ss$/i,
-				use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
-			}
-		]
-	}
+  mode: 'production',
+  entry: { app: './public/js/app.ts' },
+  output: {
+    path: path.resolve(__dirname, 'public', 'dist'),
+    filename: '[name].js',
+  },
+  resolve: { extensions: ['.ts', '.js'] },
+  plugins: [new MiniCssExtractPlugin({ filename: '[name].css' })],
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: { loader: 'ts-loader', options: { transpileOnly: true } },
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
+    ],
+  },
 };
