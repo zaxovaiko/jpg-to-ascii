@@ -1,6 +1,5 @@
 {
   "buildCommand": "pnpm build",
-  "outputDirectory": "public",
   "rewrites": [
     { "source": "/convert", "destination": "/api/index" }
   ]

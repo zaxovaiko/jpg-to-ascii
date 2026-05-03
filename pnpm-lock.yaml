@@ -15,7 +15,7 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       sharp:
-        specifier: ^0.34.5
+        specifier: 0.34.5
         version: 0.34.5
     devDependencies:
       '@types/express':

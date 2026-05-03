@@ -1,4 +1,5 @@
-@import "variables";
+@use "variables" as *;
+@use "sass:color";
 
 *:not(pre) {
 	margin: 0;
@@ -20,7 +21,7 @@ a {
 	font-weight: bold;
 
 	&:hover {
-		color: darken($secondary-text-color, 50%);
+		color: color.adjust($secondary-text-color, $lightness: -50%);
 	}
 }
 
@@ -51,19 +52,19 @@ body {
 .btn-primary {
 	color: #fff;
 	background: $btn-primary-color;
-	border: solid 1px darken($btn-primary-color, 20%);
+	border: solid 1px color.adjust($btn-primary-color, $lightness: -20%);
 
 	&:hover {
-		background: darken($btn-primary-color, 10%);
+		background: color.adjust($btn-primary-color, $lightness: -10%);
 	}
 }
 
 .btn-secondary {
 	background: $btn-secondary-color;
-	border: solid 1px darken($btn-secondary-color, 20%);
+	border: solid 1px color.adjust($btn-secondary-color, $lightness: -20%);
 
 	&:hover {
-		background: darken($btn-secondary-color, 5%);
+		background: color.adjust($btn-secondary-color, $lightness: -5%);
 	}
 }
 
@@ -83,7 +84,7 @@ select {
 	margin-top: 8px;
 	padding: 6px 10px;
 	border-radius: 6px;
-	border: solid 1px darken($btn-secondary-color, 20%);
+	border: solid 1px color.adjust($btn-secondary-color, $lightness: -20%);
 	font-family: "Quicksand", sans-serif;
 	font-size: 1rem;
 	background: #fff;
