@@ -1,6 +1,17 @@
 {
-  "buildCommand": "pnpm build",
-  "rewrites": [
-    { "source": "/convert", "destination": "/api/index" }
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "public" }
+    },
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/convert", "dest": "/api/index" },
+    { "handle": "filesystem" }
   ]
 }

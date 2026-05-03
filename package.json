@@ -8,6 +8,7 @@
     "start": "tsx ./src/server.ts",
     "dev": "concurrently -n webpack,node -c green,blue \"webpack --watch\" \"tsx watch ./src/server.ts\"",
     "build": "webpack",
+    "vercel-build": "webpack",
     "lint": "oxlint src/ public/js/",
     "format": "oxfmt --write src/ public/js/ webpack.config.js"
   },
